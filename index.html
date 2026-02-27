@@ -1,87 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Birthday Queen 👑</title>
+<title>Happy Birthday Damiaaa 🌌</title>
 <style>
 body {
     margin:0;
     padding:0;
-    background: linear-gradient(135deg, hotpink, purple);
-    text-align:center;
+    overflow:hidden;
+    background:black;
     font-family: Arial, sans-serif;
     color:white;
-    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
 }
-h1 {
-    margin-top:150px;
-    font-size:50px;
-}
-button {
-    padding:15px 30px;
-    font-size:18px;
-    border:none;
-    border-radius:20px;
-    cursor:pointer;
-    background:white;
-    color:purple;
-    font-weight:bold;
-}
+
+/* Star Canvas */
 canvas {
     position:fixed;
     top:0;
     left:0;
+}
+
+/* Text Glow */
+h1 {
+    font-size:55px;
+    z-index:1;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 30px #8a2be2; }
+}
+
+button {
+    margin-top:20px;
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    background:#8a2be2;
+    color:white;
+    z-index:1;
+}
+button:hover {
+    transform:scale(1.1);
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎉 HAPPY BIRTHDAY SPORTING QUEEN 🎉</h1>
-<p>Main Character Energy: MAX 🔥</p>
-<button onclick="startParty()">Start Birthday Mode 🎊</button>
+<div>
+    <h1>✨ Happy Birthday Damiaaa ✨</h1>
+    <button onclick="startNight()">Play 🎵</button>
+</div>
 
-<canvas id="confetti"></canvas>
+<canvas id="stars"></canvas>
 
+<!-- Your own uploaded file -->
 <audio id="music" loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <source src="love.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-function startParty(){
+function startNight(){
     document.getElementById("music").play();
-    alert("Of course you clicked. Iconic behavior 👑🔥");
-    confettiEffect();
 }
 
-function confettiEffect(){
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+/* Night Sky Stars */
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
 
-    let pieces = [];
-    for(let i=0;i<200;i++){
-        pieces.push({
-            x:Math.random()*canvas.width,
-            y:Math.random()*canvas.height,
-            size:Math.random()*8,
-            speed:Math.random()*3+2
-        });
-    }
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    function draw(){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle="white";
-        pieces.forEach(p=>{
-            ctx.fillRect(p.x,p.y,p.size,p.size);
-            p.y+=p.speed;
-            if(p.y>canvas.height) p.y=0;
-        });
-        requestAnimationFrame(draw);
-    }
-    draw();
+let stars = [];
+
+for(let i=0;i<200;i++){
+    stars.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        size:Math.random()*2,
+        speed:Math.random()*0.5
+    });
 }
+
+function drawStars(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="white";
+    stars.forEach(star=>{
+        ctx.beginPath();
+        ctx.arc(star.x,star.y,star.size,0,Math.PI*2);
+        ctx.fill();
+        star.y+=star.speed;
+        if(star.y>canvas.height){
+            star.y=0;
+            star.x=Math.random()*canvas.width;
+        }
+    });
+    requestAnimationFrame(drawStars);
+}
+
+drawStars();
 </script>
 
 </body>
-</html>
+</html>>
