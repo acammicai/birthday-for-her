@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Happy Birthday Damiaaa 🌌❤️</title>
+<title>Happy Birthday Damia 🌌❤️</title>
 <style>
+/* Body setup */
 body {
     margin:0;
     padding:0;
@@ -17,16 +18,16 @@ body {
     text-align:center;
 }
 
-/* Star Canvas */
+/* Canvas for stars & confetti */
 canvas {
     position:fixed;
     top:0;
     left:0;
-    z-index:0;
-    pointer-events:none; /* Let clicks pass through */
+    z-index:0;            /* behind everything */
+    pointer-events:none;   /* clicks pass through */
 }
 
-/* Glowing Text */
+/* Glowing text */
 h1 {
     font-size:55px;
     z-index:1;
@@ -38,7 +39,7 @@ h1 {
     to { text-shadow: 0 0 30px #ff69b4; }
 }
 
-/* Button */
+/* Button styling */
 button {
     margin-top:20px;
     padding:12px 25px;
@@ -55,7 +56,13 @@ button:hover {
     transform:scale(1.1);
 }
 
-/* Love Emoji */
+/* Container above canvas */
+div.container {
+    position: relative;
+    z-index:10; /* above canvas */
+}
+
+/* Love emoji animation */
 .love {
     position:absolute;
     font-size:25px;
@@ -66,29 +73,27 @@ button:hover {
     from { transform: translateY(100vh) scale(1); opacity:1; }
     to { transform: translateY(-50px) scale(1.5); opacity:0; }
 }
-
-/* Container div on top of canvas */
-div.container {
-    position: relative;
-    z-index: 1;
-}
 </style>
 </head>
 
 <body>
 
+<!-- Text + button container -->
 <div class="container">
     <h1>✨ Happy Birthday Damiaaa ✨</h1>
     <button onclick="startParty()">Start Celebration 🎊</button>
 </div>
 
+<!-- Canvas for stars & confetti -->
 <canvas id="stars"></canvas>
 
+<!-- Music -->
 <audio id="music" loop>
     <source src="love.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+// Button function
 function startParty(){
     document.getElementById("music").play();
     drawStars();
@@ -102,7 +107,6 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let stars = [];
-
 for(let i=0;i<200;i++){
     stars.push({
         x:Math.random()*canvas.width,
@@ -111,7 +115,6 @@ for(let i=0;i<200;i++){
         speed:Math.random()*0.5
     });
 }
-
 function drawStars(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle="white";
@@ -151,7 +154,7 @@ function launchConfetti(){
     drawConfetti();
 }
 
-/* Love Emoji Animation */
+/* Love emojis */
 function spawnLoveEmojis(){
     setInterval(()=>{
         let love = document.createElement("div");
@@ -160,7 +163,6 @@ function spawnLoveEmojis(){
         love.style.left=Math.random()*100+"vw";
         love.style.animationDuration=(Math.random()*2+2)+"s";
         document.body.appendChild(love);
-        // remove emoji after animation
         setTimeout(()=>love.remove(),4000);
     },300);
 }
